@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'org.springframework:spring-context:5.2.3.RELEASE'
+    testImplementation 'junit:junit:4.12'
+}
+
+application {
+    mainClassName = 'my.vee.template.App'
+}
+
+task jarWithDependencies(type: Jar) {
+    manifest {
+        attributes 'Main-Class' : 'my.vee.template.App'
+    }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }}
+    with jar
+}
